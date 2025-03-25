@@ -1,0 +1,19 @@
+services:
+  nats:
+    image: nats:latest
+    container_name: public_jetstream
+    restart: always
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - ./nats.conf:/etc/nats/nats.conf
+      - ./certs:/etc/nats/certs
+    command: ["-js", "-c", "/etc/nats/nats.conf"]
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: nats-net
